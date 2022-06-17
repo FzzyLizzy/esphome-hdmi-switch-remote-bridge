@@ -1,0 +1,84 @@
+substitutions:
+  hostname: 'hdmi-switch'
+esphome:
+  name: $hostname
+  platform: ESP8266
+  board: esp01_1m
+
+# Enable logging
+logger:
+
+ota:
+  password: "b3eb1b6d04e8f88de117aeeeb5d3b4af"
+
+wifi:
+  ssid: !secret esp_ssid
+  password: !secret esp_pw
+  ap:
+    ssid: "hdmi-switch Fallback Hotspot"
+    password: "BoZLWxWK231R"
+
+# Enable Home Assistant API
+api:
+
+captive_portal:
+
+sensor:
+  - platform: wifi_signal
+    name: $hostname WiFiSignal
+    icon: mdi:wifi-arrow-up-down
+    id: WiFiSignal
+    update_interval: 60s
+
+remote_transmitter:
+  # D2
+  pin: 
+    number: GPIO4
+  carrier_duty_percent: 50%
+  
+button:
+  - platform: template
+    id: hdmi_5
+    name: "HDMI 5"
+    icon: mdi:video-input-hdmi
+    on_press:
+      - remote_transmitter.transmit_raw:
+          carrier_frequency: 38kHz
+          code: [8949, -4438, 541, -573, 540, -1685, 540, -576, 538, -580, 533, -576, 538, -1690, 537, -575, 538, -576, 536, -1694, 533, -575, 538, -1686, 538, -1689, 537, -1687, 538, -579, 535, -1688, 536, -1699, 535, -576, 537, -1690, 538, -1688, 536, -1689, 537, -1692, 533, -575, 540, -573, 541, -581, 539, -1687, 540, -578, 534, -578, 534, -576, 539, -573, 539, -1686, 540, -1685, 541, -1684, 542]
+          
+  - platform: template
+    id: hdmi_4
+    name: "HDMI 4"
+    icon: mdi:video-input-hdmi
+    on_press:
+        - remote_transmitter.transmit_raw:
+            carrier_frequency: 38kHz
+            code: [8949, -4438, 541, -574, 540, -1685, 540, -578, 537, -573, 539, -576, 538, -1689, 537, -574, 539, -576, 539, -1684, 542, -574, 540, -1685, 539, -1686, 541, -1688, 538, -572, 541, -1689, 537, -1695, 541, -1687, 538, -573, 539, -574, 540, -1687, 539, -1689, 537, -575, 539, -573, 539, -590, 533, -574, 540, -1686, 539, -1687, 538, -577, 538, -572, 542, -1684, 542, -1684, 544, -1683, 541]
+          
+  - platform: template
+    id: hdmi_3
+    name: "HDMI 3"
+    icon: mdi:video-input-hdmi
+    on_press:
+      - remote_transmitter.transmit_raw:
+          carrier_frequency: 38kHz
+          code: [8991, -4388, 563, -550, 563, -1664, 562, -556, 557, -552, 562, -551, 562, -1663, 563, -550, 563, -553, 560, -1627, 599, -551, 563, -1661, 564, -1662, 563, -1664, 564, -550, 561, -1671, 556, -1671, 561, -1666, 560, -1665, 559, -1666, 560, -551, 563, -1662, 560, -553, 560, -554, 560, -558, 562, -553, 562, -549, 563, -550, 562, -1664, 562, -550, 561, -1665, 562, -1666, 556, -1667, 533]
+          
+  - platform: template
+    id: hdmi_2
+    name: "HDMI 2"
+    icon: mdi:video-input-hdmi
+    on_press:
+      - remote_transmitter.transmit_raw:
+          carrier_frequency: 38kHz
+          code: [8949, -4434, 542, -573, 539, -1685, 541, -574, 538, -579, 534, -578, 535, -1688, 538, -574, 540, -578, 536, -1684, 540, -576, 537, -1687, 538, -1687, 539, -1688, 541, -571, 538, -1688, 538, -1695, 538, -576, 538, -1685, 540, -575, 538, -578, 538, -1683, 540, -577, 538, -574, 539, -581, 542, -1686, 539, -576, 538, -1685, 540, -1685, 541, -572, 541, -1684, 540, -1687, 540, -1684, 541]
+          
+  - platform: template
+    id: hdmi_1
+    name: "HDMI 1"
+    icon: mdi:video-input-hdmi
+    on_press:
+      - remote_transmitter.transmit_raw:
+          carrier_frequency: 38kHz
+          code: [8946, -4443, 537, -578, 536, -1691, 536, -544, 568, -580, 535, -577, 559, -1670, 535, -575, 538, -577, 537, -1690, 537, -580, 533, -1691, 537, -1692, 535, -1691, 537, -577, 536, -1694, 534, -1701, 534, -1693, 535, -1694, 534, -1691, 535, -1689, 538, -578, 536, -579, 535, -576, 538, -587, 536, -578, 535, -578, 536, -577, 537, -577, 536, -1689, 538, -1689, 539, -1689, 537, -1694, 533]
+          
